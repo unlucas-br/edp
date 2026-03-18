@@ -17,10 +17,7 @@
       --error: #f87171;
     }
 
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
+    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
 
     body {
       margin: 0;
@@ -41,7 +38,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, .5);
+      box-shadow: 0 4px 20px rgba(0,0,0,.5);
     }
 
     header {
@@ -64,18 +61,9 @@
       scrollbar-color: var(--accent) #2a2a2a;
     }
 
-    main::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    main::-webkit-scrollbar-thumb {
-      background-color: var(--accent);
-      border-radius: 4px;
-    }
-
-    main::-webkit-scrollbar-track {
-      background: #2a2a2a;
-    }
+    main::-webkit-scrollbar { width: 8px; }
+    main::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 4px; }
+    main::-webkit-scrollbar-track { background: #2a2a2a; }
 
     .msg {
       max-width: 95%;
@@ -85,26 +73,10 @@
       line-height: 1.5;
     }
 
-    .user {
-      background: var(--accent);
-      color: #fff;
-      align-self: flex-end;
-      border-bottom-right-radius: 6px;
-    }
+    .user { background: var(--accent); color: #fff; align-self: flex-end; border-bottom-right-radius: 6px; }
+    .bot  { background: #333333; align-self: flex-start; border-bottom-left-radius: 6px; }
 
-    .bot {
-      background: #333333;
-      align-self: flex-start;
-      border-bottom-left-radius: 6px;
-    }
-
-    .time {
-      font-size: .7rem;
-      opacity: .7;
-      display: block;
-      margin-top: .5rem;
-      text-align: right;
-    }
+    .time { font-size: .7rem; opacity: .7; display: block; margin-top: .5rem; text-align: right; }
 
     .input-box {
       display: flex;
@@ -127,35 +99,20 @@
       color: var(--text);
     }
 
-    input[type="file"] {
-      display: none;
-    }
+    input[type="file"] { display: none; }
 
     button {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
+      width: 42px; height: 42px;
+      border: none; border-radius: 50%;
+      background: var(--accent); color: #fff;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem;
       transition: all .2s;
     }
 
-    button:hover:not(:disabled) {
-      background: #e55a00;
-      transform: scale(1.05);
-    }
-
-    button:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-      transform: none;
-    }
+    button:hover:not(:disabled) { background: #e55a00; transform: scale(1.05); }
+    button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
     .stats {
       background: #2a2a2a;
@@ -175,38 +132,15 @@
       overflow-y: auto;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .8rem;
-      min-width: 1000px;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 1000px; }
 
-    th, td {
-      padding: .5rem;
-      border: 1px solid var(--border);
-      text-align: left;
-      word-wrap: break-word;
-      max-width: 150px;
-    }
+    th, td { padding: .5rem; border: 1px solid var(--border); text-align: left; word-wrap: break-word; max-width: 150px; }
 
-    th {
-      background: #333333;
-      font-weight: 600;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      white-space: nowrap;
-    }
+    th { background: #333333; font-weight: 600; position: sticky; top: 0; z-index: 10; white-space: nowrap; }
 
-    tr:nth-child(even) {
-      background: rgba(255, 255, 255, 0.02);
-    }
+    tr:nth-child(even) { background: rgba(255,255,255,0.02); }
 
-    .cep-valid {
-      color: var(--success);
-      font-weight: 600;
-    }
+    .cep-valid { color: var(--success); font-weight: 600; }
 
     .download {
       margin-top: .75rem;
@@ -218,71 +152,38 @@
       border: none;
       cursor: pointer;
       font-weight: 500;
-      width: auto;
-      height: auto;
+      width: auto; height: auto;
     }
 
-    .download:hover {
-      background: #e55a00;
-    }
+    .download:hover { background: #e55a00; }
 
-    .prefixos-info {
-      font-size: .85rem;
-      color: var(--sub);
-      margin-top: .5rem;
-    }
+    .prefixos-info { font-size: .85rem; color: var(--sub); margin-top: .5rem; }
 
     .file-input-wrapper {
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
       display: inline-block;
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 50%;
       background: var(--accent);
       cursor: pointer;
       transition: all .2s;
     }
 
-    .file-input-wrapper:hover {
-      background: #e55a00;
-      transform: scale(1.05);
-    }
+    .file-input-wrapper:hover { background: #e55a00; transform: scale(1.05); }
 
-    .file-input-wrapper input[type=file] {
-      position: absolute;
-      left: -9999px;
-      opacity: 0;
-    }
+    .file-input-wrapper input[type=file] { position: absolute; left: -9999px; opacity: 0; }
 
     .file-input-wrapper .file-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      color: #fff;
-      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+      color: #fff; font-size: 1.1rem;
     }
 
     @media (max-width: 768px) {
-      .wrap {
-        max-width: 100%;
-      }
-
-      header {
-        font-size: .95rem;
-        padding: .75rem 1rem;
-      }
-
-      table {
-        font-size: .75rem;
-        min-width: 800px;
-      }
-
-      th, td {
-        padding: .4rem;
-      }
+      .wrap { max-width: 100%; }
+      header { font-size: .95rem; padding: .75rem 1rem; }
+      table { font-size: .75rem; min-width: 800px; }
+      th, td { padding: .4rem; }
     }
   </style>
 </head>
@@ -319,11 +220,11 @@
     let currentData = [];
     let filteredData = [];
 
-    const fileInput = document.getElementById('fileInput');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const chat = document.getElementById('chat');
-    const dropZone = document.getElementById('dropZone');
+    const fileInput  = document.getElementById('fileInput');
+    const userInput  = document.getElementById('userInput');
+    const sendBtn    = document.getElementById('sendBtn');
+    const chat       = document.getElementById('chat');
+    const dropZone   = document.getElementById('dropZone');
 
     function getTime() {
       return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -337,14 +238,71 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
+    // ─── CONVERSORES ────────────────────────────────────────────────────────────
+
+    /**
+     * Converte número serial do Excel para data no formato DD/MM/AAAA.
+     * O Excel usa 1 = 01/01/1900, com o bug do "1900 é bissexto" (por isso offset -1).
+     */
+    function excelSerialToDate(serial) {
+      if (typeof serial !== 'number' || serial < 1) return serial;
+      // Subtrai 1 para corrigir o bug histórico do Lotus 1-2-3 (dia 60 = 29/02/1900 inexistente)
+      const utcDays  = serial - 1;
+      const msPerDay = 86400000;
+      const epoch    = new Date(Date.UTC(1900, 0, 1)); // 01/01/1900
+      const date     = new Date(epoch.getTime() + (utcDays - 1) * msPerDay);
+      const dd  = String(date.getUTCDate()).padStart(2, '0');
+      const mm  = String(date.getUTCMonth() + 1).padStart(2, '0');
+      const yyyy = date.getUTCFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    /**
+     * Converte fração decimal de horário (0–1) para HH:MM.
+     * Ex: 0.333... → "08:00"
+     */
+    function excelFractionToTime(fraction) {
+      const totalMinutes = Math.round(fraction * 24 * 60);
+      const hh = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
+      const mm = String(totalMinutes % 60).padStart(2, '0');
+      return `${hh}:${mm}`;
+    }
+
+    /**
+     * Decide o tipo de uma coluna pelo nome do cabeçalho e converte o valor.
+     */
+    function processExcelCell(cell, header) {
+      if (typeof header !== 'string' || cell === undefined || cell === null || cell === '') return cell ?? '';
+
+      const h = header.toLowerCase();
+
+      // Colunas de DATA (valor inteiro grande = serial de data)
+      if (/\bdata\b/.test(h)) {
+        if (typeof cell === 'number' && cell > 1000) {
+          return excelSerialToDate(cell);
+        }
+        return cell;
+      }
+
+      // Colunas de HORA (valor fracionário entre 0 e 1)
+      if (/hor[ao]|in[ií]cio|final/.test(h)) {
+        if (typeof cell === 'number' && cell >= 0 && cell < 1) {
+          return excelFractionToTime(cell);
+        }
+        return cell;
+      }
+
+      return cell;
+    }
+
+    // ─── DRAG & DROP ─────────────────────────────────────────────────────────────
+
     dropZone.addEventListener('dragover', e => {
       e.preventDefault();
       dropZone.style.border = '2px dashed var(--accent)';
     });
 
-    dropZone.addEventListener('dragleave', () => {
-      dropZone.style.border = 'none';
-    });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.border = 'none'; });
 
     dropZone.addEventListener('drop', e => {
       e.preventDefault();
@@ -358,14 +316,17 @@
       if (file) processFile(file);
     });
 
+    // ─── LEITURA DO ARQUIVO ──────────────────────────────────────────────────────
+
     function processFile(file) {
       const reader = new FileReader();
       reader.onload = function (e) {
         try {
           const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
+          // cellDates:false → mantém números seriais; faremos a conversão manualmente
+          const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-          const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+          const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1, raw: true });
           if (!jsonData.length) throw new Error("Arquivo vazio ou ilegível.");
           currentData = jsonData;
           filterData();
@@ -377,44 +338,34 @@
       addMessage("📄 Arquivo recebido: <strong>" + file.name + "</strong>", 'user');
     }
 
+    // ─── FILTRAGEM ───────────────────────────────────────────────────────────────
+
     function filterData() {
       const headers = currentData[0];
-      const rows = currentData.slice(1);
+      const rows    = currentData.slice(1);
 
+      // Detecta colunas com CEP
       const cepCols = [];
       headers.forEach((h, i) => {
-        if (typeof h === 'string' && /cep|endereço|address/i.test(h)) cepCols.push(i);
+        if (typeof h === 'string' && /cep|endere[çc]o|address/i.test(h)) cepCols.push(i);
       });
       if (!cepCols.length) cepCols.push(...headers.keys());
 
-      filteredData = rows.filter(row => {
-        return cepCols.some(i => {
+      filteredData = rows.filter(row =>
+        cepCols.some(i => {
           const val = String(row[i] || '').replace(/\D/g, '');
           return prefixos.some(p => val.startsWith(p));
-        });
-      });
+        })
+      );
 
       displayResults(headers, filteredData);
     }
 
-    function processExcelCell(cell, header) {
-      if (typeof header === 'string') {
-        const h = header.toLowerCase();
-        if ((h.includes('início') || h.includes('inicio') || h.includes('final') || h.includes('hora')) &&
-          typeof cell === 'number' && cell >= 0 && cell < 1) {
-          const totalMinutes = Math.round(cell * 24 * 60);
-          const hh = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
-          const mm = String(totalMinutes % 60).padStart(2, '0');
-          return `${hh}:${mm}`;
-        }
-      }
-      return cell;
-    }
+    // ─── EXIBIÇÃO ────────────────────────────────────────────────────────────────
 
     function displayResults(headers, data) {
       const stats = document.createElement('div');
       stats.className = 'stats';
-      stats.style.display = 'block';
       stats.innerHTML = `✅ <strong>Filtragem concluída!</strong><br>📊 Total de obras válidas: <strong>${data.length}</strong>`;
       addMessage(stats.outerHTML, 'bot');
 
@@ -423,19 +374,19 @@
         return;
       }
 
-      // Montar tabela
-      let tabelaHtml = `
+      const tabelaHtml = `
         <div class="table-container">
           <table>
             <thead>
-              <tr>${headers.map(h => `<th>${h || 'Coluna'}</th>`).join('')}</tr>
+              <tr>${headers.map(h => `<th>${h ?? 'Coluna'}</th>`).join('')}</tr>
             </thead>
             <tbody>
               ${data.map(row => `
                 <tr>
                   ${headers.map((h, i) => {
-                    let val = processExcelCell(row[i] || '', h);
-                    if (/cep/i.test(h)) val = `<span class="cep-valid">${val}</span>`;
+                    let val = processExcelCell(row[i], h);
+                    if (typeof h === 'string' && /cep/i.test(h))
+                      val = `<span class="cep-valid">${val}</span>`;
                     return `<td>${val}</td>`;
                   }).join('')}
                 </tr>
@@ -449,9 +400,11 @@
       addMessage(tabelaHtml, 'bot');
     }
 
+    // ─── EXPORTAÇÃO ──────────────────────────────────────────────────────────────
+
     function exportResults() {
       if (!filteredData.length) return;
-      const headers = currentData[0];
+      const headers  = currentData[0];
       const processed = filteredData.map(row =>
         row.map((cell, i) => processExcelCell(cell, headers[i]))
       );
@@ -459,31 +412,22 @@
       const ws = XLSX.utils.aoa_to_sheet(exportArray);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Obras Regiao');
-      XLSX.writeFile(wb, `obras_edp_regiao_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.xlsx`);
+      XLSX.writeFile(wb, `obras_edp_regiao_${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.xlsx`);
     }
 
-    // Enter para processar
-    userInput.addEventListener('keypress', e => {
-      if (e.key === 'Enter') {
-        if (!userInput.value.trim()) return;
-        addMessage(userInput.value, 'user');
-        // Simular processamento de texto colado como CSV/TXT
-        currentData = [userInput.value.split('\t')]; // simulação simples
-        filteredData = [userInput.value.split('\t')]; // simulação simples
-        displayResults(['Dados colados'], filteredData);
-        userInput.value = '';
-      }
-    });
+    // ─── INPUT DE TEXTO ──────────────────────────────────────────────────────────
 
-    sendBtn.addEventListener('click', () => {
+    function handleTextInput() {
       if (!userInput.value.trim()) return;
       addMessage(userInput.value, 'user');
       currentData = [userInput.value.split('\t')];
       filteredData = [userInput.value.split('\t')];
       displayResults(['Dados colados'], filteredData);
       userInput.value = '';
-    });
+    }
+
+    userInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleTextInput(); });
+    sendBtn.addEventListener('click', handleTextInput);
   </script>
 </body>
 </html>
-
