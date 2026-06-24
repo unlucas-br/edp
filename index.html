@@ -4,430 +4,118 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verificador de Obras EDP – Atuamax</title>
+  <meta name="description" content="Validador e verificador de obras da EDP para a Atuamax. Filtre planilhas por CEPs regionais atendidos e exporte resultados de forma rápida.">
+  
+  <!-- CSS Modernizado -->
+  <link rel="stylesheet" href="css/styles.css?v=2">
+  
+  <!-- Biblioteca Excel XLSX -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <style>
-    :root {
-      --bg: #1a1a1a;
-      --card: #222222;
-      --text: #f0f0f0;
-      --sub: #a0a0a0;
-      --accent: #ff6600;
-      --border: #444444;
-      --success: #4ade80;
-      --error: #f87171;
-    }
-
-    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 0;
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 1200px;
-      height: 100vh;
-      background: var(--card);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,.5);
-    }
-
-    header {
-      padding: 1rem 1.25rem;
-      font-weight: 600;
-      border-bottom: 1px solid var(--border);
-      color: var(--accent);
-      flex-shrink: 0;
-      font-size: 1.1rem;
-    }
-
-    main {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent) #2a2a2a;
-    }
-
-    main::-webkit-scrollbar { width: 8px; }
-    main::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 4px; }
-    main::-webkit-scrollbar-track { background: #2a2a2a; }
-
-    .msg {
-      max-width: 95%;
-      padding: .75rem 1rem;
-      border-radius: 18px;
-      font-size: .95rem;
-      line-height: 1.5;
-    }
-
-    .user { background: var(--accent); color: #fff; align-self: flex-end; border-bottom-right-radius: 6px; }
-    .bot  { background: #333333; align-self: flex-start; border-bottom-left-radius: 6px; }
-
-    .time { font-size: .7rem; opacity: .7; display: block; margin-top: .5rem; text-align: right; }
-
-    .input-box {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      padding: .75rem 1rem;
-      border-top: 1px solid var(--border);
-      background: #2a2a2a;
-      flex-shrink: 0;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      padding: .7rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      outline: none;
-      font-size: .95rem;
-      background: #1a1a1a;
-      color: var(--text);
-    }
-
-    input[type="file"] { display: none; }
-
-    button {
-      width: 42px; height: 42px;
-      border: none; border-radius: 50%;
-      background: var(--accent); color: #fff;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-      transition: all .2s;
-    }
-
-    button:hover:not(:disabled) { background: #e55a00; transform: scale(1.05); }
-    button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
-    .stats {
-      background: #2a2a2a;
-      padding: .75rem 1rem;
-      border-radius: 8px;
-      margin: .5rem 0;
-      font-size: .9rem;
-      border-left: 4px solid var(--accent);
-    }
-
-    .table-container {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin: .5rem 0;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    table { width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 1000px; }
-
-    th, td { padding: .5rem; border: 1px solid var(--border); text-align: left; word-wrap: break-word; max-width: 150px; }
-
-    th { background: #333333; font-weight: 600; position: sticky; top: 0; z-index: 10; white-space: nowrap; }
-
-    tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-
-    .cep-valid { color: var(--success); font-weight: 600; }
-
-    .download {
-      margin-top: .75rem;
-      font-size: .85rem;
-      padding: .6rem 1.2rem;
-      border-radius: 24px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-weight: 500;
-      width: auto; height: auto;
-    }
-
-    .download:hover { background: #e55a00; }
-
-    .prefixos-info { font-size: .85rem; color: var(--sub); margin-top: .5rem; }
-
-    .file-input-wrapper {
-      position: relative; overflow: hidden;
-      display: inline-block;
-      width: 42px; height: 42px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      transition: all .2s;
-    }
-
-    .file-input-wrapper:hover { background: #e55a00; transform: scale(1.05); }
-
-    .file-input-wrapper input[type=file] { position: absolute; left: -9999px; opacity: 0; }
-
-    .file-input-wrapper .file-label {
-      display: flex; align-items: center; justify-content: center;
-      width: 100%; height: 100%;
-      color: #fff; font-size: 1.1rem;
-    }
-
-    @media (max-width: 768px) {
-      .wrap { max-width: 100%; }
-      header { font-size: .95rem; padding: .75rem 1rem; }
-      table { font-size: .75rem; min-width: 800px; }
-      th, td { padding: .4rem; }
-    }
-  </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>Verificador EDP - Atuamax</header>
 
-    <main id="chat">
-      <div class="msg bot">
-        📂 <strong>Envie o arquivo da EDP</strong><br>
-        <div class="prefixos-info">
-          <strong>Prefixos CEP válidos:</strong><br>
-          07124, 07130, 07131, 07132, 07134, 07135, 07087, 07072, 07073, 07074, 07075, 07076, 07077, 07080, 07081, 07082, 07083, 07084, 07085
+  <!-- Cabeçalho Principal -->
+  <header>
+    <div class="logo-container">
+      <span class="logo-icon">⚡</span>
+      <h1 class="logo-text">EDP – ATUAMAX</h1>
+    </div>
+  </header>
+
+  <!-- Container Geral Split-Pane -->
+  <div class="app-container">
+    
+    <!-- Painel Lateral: Chat Assistente -->
+    <aside class="sidebar">
+      <!-- Container das Mensagens de Chat -->
+      <div class="chat-messages" id="chat">
+        <div class="msg bot">
+          Arraste o arquivo Excel da <strong>EDP</strong> na área ao lado, clique em "Selecionar Arquivo" ou cole dados individuais na barra abaixo.
         </div>
+      </div>
+      
+      <!-- Caixa de Input do Chat -->
+      <div class="chat-input-area" id="dropZoneChat">
+        <input id="userInput" class="text-input" type="text" placeholder="Cole os dados aqui..." />
+        <div style="display: none;">
+          <input id="fileInput" type="file" accept=".xlsx,.xls">
+        </div>
+        <button class="file-upload-trigger" onclick="document.getElementById('fileInput').click()" title="Selecionar arquivo Excel">
+          📎
+        </button>
+        <button id="sendBtn" class="send-button" title="Validar">➤</button>
+      </div>
+    </aside>
+
+    <!-- Painel Principal de Trabalho (Workspace) -->
+    <main class="workspace" id="workspace">
+      
+      <!-- Landing View (Sem arquivo ativo) -->
+      <div class="landing-view" id="landingView">
+        <div class="landing-icon">📂</div>
+        <h2 class="landing-title">Arraste ou selecione a planilha EDP</h2>
+        <p class="landing-desc">
+          Arraste o arquivo original de obras <strong>.xlsx</strong> ou <strong>.xls</strong> nesta área para filtrar as linhas pelos CEPs atendidos.
+        </p>
+        <button class="btn-primary" style="margin-top: 1.5rem;" onclick="document.getElementById('fileInput').click()">
+          Procurar Arquivo
+        </button>
+      </div>
+
+      <!-- Dashboard de Resultados (Preenchido após processar) -->
+      <div class="dashboard-view" id="dashboardView" style="display: none;">
+        
+        <!-- Cartões Informativos de Estatísticas -->
+        <div class="stats-row">
+          <div class="stat-card total">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+              <span class="stat-label">Total Obras</span>
+              <span class="stat-value" id="statTotal">0</span>
+            </div>
+          </div>
+          <div class="stat-card valid">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <span class="stat-label">Obras Válidas</span>
+              <span class="stat-value" id="statValid">0</span>
+            </div>
+          </div>
+          <div class="stat-card invalid">
+            <div class="stat-icon">❌</div>
+            <div class="stat-info">
+              <span class="stat-label">Fora da Região</span>
+              <span class="stat-value" id="statInvalid">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco de Visualização da Tabela de Obras Filtradas -->
+        <div class="results-card" id="resultsCard">
+          <div class="results-header">
+            <h2 class="results-title">🔍 Visualização de Obras Filtradas</h2>
+            <div class="results-actions">
+              <button id="downloadBtn" class="btn-primary" title="Exportar obras da região para Excel">
+                📥 Exportar Excel
+              </button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead id="tableHeader"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        
       </div>
     </main>
 
-    <div class="input-box" id="dropZone">
-      <input id="userInput" type="text" placeholder="Cole os dados aqui ou use o botão para carregar arquivo..." />
-      <div class="file-input-wrapper">
-        <input id="fileInput" type="file" accept=".xlsx,.xls">
-        <label for="fileInput" class="file-label">📎</label>
-      </div>
-      <button id="sendBtn" title="Processar">➤</button>
-    </div>
   </div>
 
-  <script>
-    const prefixos = [
-      '07124','07130','07131','07132','07134','07135','07087',
-      '07072','07073','07074','07075','07076','07077','07080',
-      '07081','07082','07083','07084','07085'
-    ];
-    let currentData = [];
-    let filteredData = [];
 
-    const fileInput  = document.getElementById('fileInput');
-    const userInput  = document.getElementById('userInput');
-    const sendBtn    = document.getElementById('sendBtn');
-    const chat       = document.getElementById('chat');
-    const dropZone   = document.getElementById('dropZone');
 
-    function getTime() {
-      return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function addMessage(text, sender = 'bot') {
-      const div = document.createElement('div');
-      div.className = 'msg ' + sender;
-      div.innerHTML = text + '<span class="time">' + getTime() + '</span>';
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    // ─── CONVERSORES ────────────────────────────────────────────────────────────
-
-    /**
-     * Converte número serial do Excel para data no formato DD/MM/AAAA.
-     * O Excel usa 1 = 01/01/1900, com o bug do "1900 é bissexto" (por isso offset -1).
-     */
-    function excelSerialToDate(serial) {
-      if (typeof serial !== 'number' || serial < 1) return serial;
-      // Subtrai 1 para corrigir o bug histórico do Lotus 1-2-3 (dia 60 = 29/02/1900 inexistente)
-      const utcDays  = serial - 1;
-      const msPerDay = 86400000;
-      const epoch    = new Date(Date.UTC(1900, 0, 1)); // 01/01/1900
-      const date     = new Date(epoch.getTime() + (utcDays - 1) * msPerDay);
-      const dd  = String(date.getUTCDate()).padStart(2, '0');
-      const mm  = String(date.getUTCMonth() + 1).padStart(2, '0');
-      const yyyy = date.getUTCFullYear();
-      return `${dd}/${mm}/${yyyy}`;
-    }
-
-    /**
-     * Converte fração decimal de horário (0–1) para HH:MM.
-     * Ex: 0.333... → "08:00"
-     */
-    function excelFractionToTime(fraction) {
-      const totalMinutes = Math.round(fraction * 24 * 60);
-      const hh = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
-      const mm = String(totalMinutes % 60).padStart(2, '0');
-      return `${hh}:${mm}`;
-    }
-
-    /**
-     * Decide o tipo de uma coluna pelo nome do cabeçalho e converte o valor.
-     */
-    function processExcelCell(cell, header) {
-      if (typeof header !== 'string' || cell === undefined || cell === null || cell === '') return cell ?? '';
-
-      const h = header.toLowerCase();
-
-      // Colunas de DATA (valor inteiro grande = serial de data)
-      if (/\bdata\b/.test(h)) {
-        if (typeof cell === 'number' && cell > 1000) {
-          return excelSerialToDate(cell);
-        }
-        return cell;
-      }
-
-      // Colunas de HORA (valor fracionário entre 0 e 1)
-      if (/hor[ao]|in[ií]cio|final/.test(h)) {
-        if (typeof cell === 'number' && cell >= 0 && cell < 1) {
-          return excelFractionToTime(cell);
-        }
-        return cell;
-      }
-
-      return cell;
-    }
-
-    // ─── DRAG & DROP ─────────────────────────────────────────────────────────────
-
-    dropZone.addEventListener('dragover', e => {
-      e.preventDefault();
-      dropZone.style.border = '2px dashed var(--accent)';
-    });
-
-    dropZone.addEventListener('dragleave', () => { dropZone.style.border = 'none'; });
-
-    dropZone.addEventListener('drop', e => {
-      e.preventDefault();
-      dropZone.style.border = 'none';
-      const file = e.dataTransfer.files[0];
-      if (file) processFile(file);
-    });
-
-    fileInput.addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (file) processFile(file);
-    });
-
-    // ─── LEITURA DO ARQUIVO ──────────────────────────────────────────────────────
-
-    function processFile(file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        try {
-          const data = new Uint8Array(e.target.result);
-          // cellDates:false → mantém números seriais; faremos a conversão manualmente
-          const workbook = XLSX.read(data, { type: 'array', cellDates: false });
-          const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-          const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1, raw: true });
-          if (!jsonData.length) throw new Error("Arquivo vazio ou ilegível.");
-          currentData = jsonData;
-          filterData();
-        } catch (err) {
-          addMessage("Erro: " + err.message, 'bot');
-        }
-      };
-      reader.readAsArrayBuffer(file);
-      addMessage("📄 Arquivo recebido: <strong>" + file.name + "</strong>", 'user');
-    }
-
-    // ─── FILTRAGEM ───────────────────────────────────────────────────────────────
-
-    function filterData() {
-      const headers = currentData[0];
-      const rows    = currentData.slice(1);
-
-      // Detecta colunas com CEP
-      const cepCols = [];
-      headers.forEach((h, i) => {
-        if (typeof h === 'string' && /cep|endere[çc]o|address/i.test(h)) cepCols.push(i);
-      });
-      if (!cepCols.length) cepCols.push(...headers.keys());
-
-      filteredData = rows.filter(row =>
-        cepCols.some(i => {
-          const val = String(row[i] || '').replace(/\D/g, '');
-          return prefixos.some(p => val.startsWith(p));
-        })
-      );
-
-      displayResults(headers, filteredData);
-    }
-
-    // ─── EXIBIÇÃO ────────────────────────────────────────────────────────────────
-
-    function displayResults(headers, data) {
-      const stats = document.createElement('div');
-      stats.className = 'stats';
-      stats.innerHTML = `✅ <strong>Filtragem concluída!</strong><br>📊 Total de obras válidas: <strong>${data.length}</strong>`;
-      addMessage(stats.outerHTML, 'bot');
-
-      if (data.length === 0) {
-        addMessage("Nenhuma obra encontrada nos CEPs da região.", 'bot');
-        return;
-      }
-
-      const tabelaHtml = `
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>${headers.map(h => `<th>${h ?? 'Coluna'}</th>`).join('')}</tr>
-            </thead>
-            <tbody>
-              ${data.map(row => `
-                <tr>
-                  ${headers.map((h, i) => {
-                    let val = processExcelCell(row[i], h);
-                    if (typeof h === 'string' && /cep/i.test(h))
-                      val = `<span class="cep-valid">${val}</span>`;
-                    return `<td>${val}</td>`;
-                  }).join('')}
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-          <button class="download" onclick="exportResults()">📥 Exportar Resultados</button>
-        </div>
-      `;
-
-      addMessage(tabelaHtml, 'bot');
-    }
-
-    // ─── EXPORTAÇÃO ──────────────────────────────────────────────────────────────
-
-    function exportResults() {
-      if (!filteredData.length) return;
-      const headers  = currentData[0];
-      const processed = filteredData.map(row =>
-        row.map((cell, i) => processExcelCell(cell, headers[i]))
-      );
-      const exportArray = [headers, ...processed];
-      const ws = XLSX.utils.aoa_to_sheet(exportArray);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Obras Regiao');
-      XLSX.writeFile(wb, `obras_edp_regiao_${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.xlsx`);
-    }
-
-    // ─── INPUT DE TEXTO ──────────────────────────────────────────────────────────
-
-    function handleTextInput() {
-      if (!userInput.value.trim()) return;
-      addMessage(userInput.value, 'user');
-      currentData = [userInput.value.split('\t')];
-      filteredData = [userInput.value.split('\t')];
-      displayResults(['Dados colados'], filteredData);
-      userInput.value = '';
-    }
-
-    userInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleTextInput(); });
-    sendBtn.addEventListener('click', handleTextInput);
-  </script>
+  <!-- Entry Script Modular -->
+  <script type="module" src="js/app.js?v=2"></script>
 </body>
 </html>
